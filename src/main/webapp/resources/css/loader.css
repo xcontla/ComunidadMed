@@ -1,0 +1,24 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-ene-2018, 13:44:28
+    Author     : XavierContla
+*/
+
+.loader {
+    border: 16px solid #1C3D6C; /* Azul */ 
+    border-top: 16px solid #C5901C; /* Oro */
+    border-radius: 50%;
+    width: 240px;
+    height: 240px;
+    animation: spin 2s linear infinite;
+    margin-left: 400px; 
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
