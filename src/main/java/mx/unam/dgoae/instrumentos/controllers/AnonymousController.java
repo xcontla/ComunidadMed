@@ -42,7 +42,7 @@ public class AnonymousController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnonymousController.class);
 
-    private final String key = "12345678";
+    private final String key = "LoPlNJmY15Ut";
 
     @RequestMapping(value = "/login.dgoae", method = RequestMethod.GET)
     public String toLoginPage() {

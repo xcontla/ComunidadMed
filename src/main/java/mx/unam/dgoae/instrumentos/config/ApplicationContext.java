@@ -5,6 +5,7 @@
  */
 package mx.unam.dgoae.instrumentos.config;
 
+import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import mx.unam.dgoae.instrumentos.services.ExamenPreguntaService;
@@ -27,6 +28,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -109,5 +112,26 @@ public class ApplicationContext {
         entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
         entityManagerFactoryBean.setPackagesToScan("mx.unam.dgoae.instrumentos.entity");
         return entityManagerFactoryBean;
+    }
+    
+    
+    @Bean
+    public JavaMailSender javaMailSender() {
+        
+        LOGGER.debug(":javaMailSender() -> creating BEAN javaMailSender");
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost(enviroment.getProperty("smtp.host"));
+        mailSender.setPort(Integer.valueOf(enviroment.getProperty("smtp.port")));
+
+        mailSender.setUsername(enviroment.getProperty("smtp.username"));
+        mailSender.setPassword(enviroment.getProperty("smtp.password"));
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put(enviroment.getProperty("smtp.protocol"), enviroment.getProperty("smtp.protocol.value"));
+        props.put(enviroment.getProperty("smtp.auth"), enviroment.getProperty("smtp.auth.value"));
+        props.put(enviroment.getProperty("smtp.starttls"), enviroment.getProperty("smtp.starttls.value"));
+        props.put(enviroment.getProperty("smtp.debug"), enviroment.getProperty("smtp.debug.value"));
+        props.put(enviroment.getProperty("smtp.ssl.trust"), enviroment.getProperty("smtp.ssl.trust.value"));
+        return mailSender;
     }
 }
